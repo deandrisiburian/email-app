@@ -5,9 +5,9 @@ import { EmailList } from './components/EmailList';
 import { EmailViewer } from './components/EmailViewer';
 import { ComposeModal } from './components/ComposeModal';
 import { emailService } from './services/emailServices';
-import type { Email, Folder } from './types/email';
+import { Email, Folder } from './types/email';
 import { supabase } from './lib/supabase';
-import type { User } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
