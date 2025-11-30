@@ -5,7 +5,7 @@ import { EmailList } from './components/EmailList';
 import { EmailViewer } from './components/EmailViewer';
 import { ComposeModal } from './components/ComposeModal';
 import { emailService } from './services/emailServices';
-import { Email, Folder } from './types/email';
+import type { Email, Folder } from './types/email';
 import { supabase } from './lib/supabase';
 import { User } from '@supabase/supabase-js';
 

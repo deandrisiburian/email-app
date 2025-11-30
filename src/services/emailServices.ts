@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { Email, Folder } from '../types/email';
+import type { Email, Folder } from '../types/email';
 
 export const emailService = {
   // Get emails for current user
