@@ -1,307 +1,300 @@
 <!DOCTYPE html>
-<html lang="en"> 
-  <head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>ZetaMail - Dashboard</title> 
-    <link rel="stylesheet" href="css/style.css"> 
-    <style> 
-      .mail-container { 
-        display: flex; 
-        min-height: 100vh; 
-      } 
-      .sidebar { 
-        width: 250px; 
-        background: var(--dark-color); 
-        color: #fff; padding: 1rem; 
-      } 
-      .sidebar ul { 
-        list-style: none; 
-        padding: 0; 
-      } 
-      .sidebar ul li { 
-        margin-bottom: 1rem; 
-      } 
-      .sidebar ul li a { 
-        color: #fff; 
-        text-decoration: none; 
-        display: block; 
-        padding: 0.5rem; 
-        border-radius: 5px; 
-      } 
-      .sidebar ul li a:hover, 
-      .sidebar ul li a.active { 
-        background: rgba(255,255,255,0.1); 
-      } 
-      .main-content { 
-        flex: 1; 
-        padding: 2rem; 
-      } 
-      .email-list { 
-        border: 1px solid #ddd; 
-        border-radius: 5px; 
-        overflow: hidden; 
-      } 
-      .email-item { 
-        padding: 1rem; 
-        border-bottom: 1px solid #ddd; 
-        cursor: pointer; 
-      } 
-      .email-item:hover { 
-        background: #f5f5f5; 
-      } 
-      .email-item.unread { 
-        font-weight: bold; 
-      } 
-      .compose-form { 
-        background: #fff; 
-        padding: 2rem; 
-        border-radius: 10px; 
-        box-shadow: 0 0 20px rgba(0,0,0,0.1); 
-        margin-top: 2rem; 
-      } 
-      .form-control { 
-        margin-bottom: 1rem; 
-      } 
-      .form-control label { 
-        display: block; 
-        margin-bottom: 0.5rem; 
-      } 
-      .form-control input, 
-      .form-control textarea { 
-        width: 100%; 
-        padding: 0.75rem; 
-        border: 1px solid #ccc; 
-        border-radius: 5px; 
-      } 
-      .form-control textarea { 
-        min-height: 200px; 
-      } 
-      .header { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        padding: 1rem 2rem; 
-        background: #fff; 
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-      } 
-      .user-info { 
-        display: flex; 
-        align-items: center; 
-        gap: 1rem; 
-      } 
-    </style> 
-  </head> 
-  <body> 
-    <div class="header"> 
-      <div class="logo">ZetaMail</div> 
-      <div class="user-info"> 
-        <span id="userEmail"></span> 
-        <a href="index.html" class="btn">Sign Out</a> 
-      </div> 
-    </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZetaMail - Zeta Corporation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for mail interface */
+        .mail-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .mail-sidebar {
+            width: 250px;
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-right: 1px solid #ddd;
+        }
+        
+        .mail-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mail-toolbar {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mail-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .mail-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .mail-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .mail-item.unread {
+            background-color: #f0f7ff;
+            font-weight: bold;
+        }
+        
+        .mail-checkbox {
+            margin-right: 10px;
+        }
+        
+        .mail-sender {
+            width: 200px;
+            font-weight: bold;
+        }
+        
+        .mail-subject {
+            flex: 1;
+        }
+        
+        .mail-date {
+            width: 100px;
+            text-align: right;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .compose-btn {
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-nav ul {
+            margin: 0;
+        }
+        
+        .sidebar-nav li {
+            padding: 0.5rem 0;
+        }
+        
+        .sidebar-nav a {
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .sidebar-nav .active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .sidebar-nav .icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .search-box button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .mail-container {
+                flex-direction: column;
+            }
+            
+            .mail-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .mail-sender {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ZetaMail</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn">Sign Out</a>
+            </div>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </nav>
+    </header>
+
     <div class="mail-container">
-    <div class="sidebar">
-        <ul>
-            <li><a href="#" class="active" onclick="showInbox()">Inbox</a></li>
-            <li><a href="#" onclick="showCompose()">Compose</a></li>
-            <li><a href="#">Sent</a></li>
-            <li><a href="#">Drafts</a></li>
-            <li><a href="#">Trash</a></li>
-        </ul>
+        <aside class="mail-sidebar">
+            <button class="btn btn-primary compose-btn" style="width: 100%;">Compose</button>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Search emails...">
+                <button>Search</button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active"><span class="icon">📥</span> Inbox <span class="badge">5</span></a></li>
+                    <li><a href="#"><span class="icon">📤</span> Sent</a></li>
+                    <li><a href="#"><span class="icon">📝</span> Drafts</a></li>
+                    <li><a href="#"><span class="icon">⭐</span> Starred</a></li>
+                    <li><a href="#"><span class="icon">🗑️</span> Trash</a></li>
+                </ul>
+                
+                <h4 style="margin-top: 2rem;">Labels</h4>
+                <ul>
+                    <li><a href="#"><span class="icon">🏷️</span> Work</a></li>
+                    <li><a href="#"><span class="icon">🏷️</span> Personal</a></li>
+                    <li><a href="#"><span class="icon">🏷️</span> Important</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="mail-content">
+            <div class="mail-toolbar">
+                <div>
+                    <input type="checkbox" class="mail-checkbox">
+                    <button class="btn">Archive</button>
+                    <button class="btn">Delete</button>
+                </div>
+                <div>
+                    <button class="btn">Refresh</button>
+                </div>
+            </div>
+            
+            <div class="mail-list">
+                <div class="mail-item unread">
+                    <input type="checkbox" class="mail-checkbox">
+                    <div class="mail-sender">Sarah Johnson</div>
+                    <div class="mail-subject">Quarterly Report Review</div>
+                    <div class="mail-date">10:24 AM</div>
+                </div>
+                
+                <div class="mail-item unread">
+                    <input type="checkbox" class="mail-checkbox">
+                    <div class="mail-sender">IT Department</div>
+                    <div class="mail-subject">System Maintenance Notice</div>
+                    <div class="mail-date">9:45 AM</div>
+                </div>
+                
+                <div class="mail-item">
+                    <input type="checkbox" class="mail-checkbox">
+                    <div class="mail-sender">Marketing Team</div>
+                    <div class="mail-subject">New Campaign Proposal</div>
+                    <div class="mail-date">Yesterday</div>
+                </div>
+                
+                <div class="mail-item">
+                    <input type="checkbox" class="mail-checkbox">
+                    <div class="mail-sender">John Smith</div>
+                    <div class="mail-subject">Meeting Notes from Yesterday</div>
+                    <div class="mail-date">May 15</div>
+                </div>
+                
+                <div class="mail-item">
+                    <input type="checkbox" class="mail-checkbox">
+                    <div class="mail-sender">ZetaCorp Support</div>
+                    <div class="mail-subject">Welcome to ZetaMail!</div>
+                    <div class="mail-date">May 10</div>
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="main-content">
-        <div id="inbox-view">
-            <h2>Inbox</h2>
-            <div class="email-list" id="email-list">
-                <!-- Email list will be populated by JavaScript -->
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About ZetaCorp</h4>
+                <p>Providing cutting-edge technology solutions for modern businesses.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: support@zetacorp.xyz</p>
+                <p>Phone: (123) 456-7890</p>
             </div>
         </div>
-        <div id="compose-view" style="display: none;">
-            <h2>Compose Email</h2>
-            <div class="compose-form">
-                <form id="compose-form">
-                    <div class="form-control">
-                        <label for="to">To</label>
-                        <input type="email" id="to" required>
-                    </div>
-                    <div class="form-control">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" required>
-                    </div>
-                    <div class="form-control">
-                        <label for="body">Body</label>
-                        <textarea id="body" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Zeta Corporation. All rights reserved.</p>
         </div>
-    </div>
-</div>
+    </footer>
 
-<!-- Include Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    // Supabase configuration
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
-    
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // Get user email from localStorage (set during login)
-    const userEmail = localStorage.getItem('userEmail');
-    if (!userEmail) {
-        window.location.href = 'login.html';
-    }
-    document.getElementById('userEmail').textContent = userEmail;
-
-    // Load inbox on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        loadInbox();
-        setupRealtimeSubscription();
-    });
-
-    // Load inbox emails
-    async function loadInbox() {
-        const { data, error } = await supabase
-            .from('emails')
-            .select('*')
-            .eq('receiver_email', userEmail)
-            .order('created_at', { ascending: false });
-
-        if (error) {
-            console.error('Error loading emails:', error);
-            return;
-        }
-
-        displayEmails(data);
-    }
-
-    // Display emails in inbox
-    function displayEmails(emails) {
-        const emailList = document.getElementById('email-list');
-        emailList.innerHTML = '';
-
-        if (emails.length === 0) {
-            emailList.innerHTML = '<div class="email-item">No emails found</div>';
-            return;
-        }
-
-        emails.forEach(email => {
-            const emailItem = document.createElement('div');
-            emailItem.className = `email-item ${email.read ? '' : 'unread'}`;
-            emailItem.innerHTML = `
-                <div><strong>From:</strong> ${email.sender_email}</div>
-                <div><strong>Subject:</strong> ${email.subject}</div>
-                <div>${email.body.substring(0, 100)}...</div>
-                <div><small>${new Date(email.created_at).toLocaleString()}</small></div>
-            `;
-            emailItem.addEventListener('click', () => {
-                viewEmail(email);
+    <script src="js/script.js"></script>
+    <script>
+        // Additional functionality for mail interface
+        document.addEventListener('DOMContentLoaded', () => {
+            // Toggle unread status when clicking on mail items
+            document.querySelectorAll('.mail-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    // Don't toggle if checkbox was clicked
+                    if (e.target.type !== 'checkbox') {
+                        item.classList.toggle('unread');
+                    }
+                });
             });
-            emailList.appendChild(emailItem);
+            
+            // Select all checkbox functionality
+            const selectAllCheckbox = document.querySelector('.mail-toolbar .mail-checkbox');
+            const mailCheckboxes = document.querySelectorAll('.mail-list .mail-checkbox');
+            
+            selectAllCheckbox.addEventListener('change', () => {
+                mailCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
         });
-    }
-
-    // View email details
-    function viewEmail(email) {
-        // Mark as read
-        markAsRead(email.id);
-        
-        // Show email content (you can implement a modal or separate view)
-        alert(`From: ${email.sender_email}\nSubject: ${email.subject}\n\n${email.body}`);
-    }
-
-    // Mark email as read
-    async function markAsRead(emailId) {
-        await supabase
-            .from('emails')
-            .update({ read: true })
-            .eq('id', emailId);
-    }
-
-    // Show compose view
-    function showCompose() {
-        document.getElementById('inbox-view').style.display = 'none';
-        document.getElementById('compose-view').style.display = 'block';
-    }
-
-    // Show inbox view
-    function showInbox() {
-        document.getElementById('inbox-view').style.display = 'block';
-        document.getElementById('compose-view').style.display = 'none';
-        loadInbox();
-    }
-
-    // Handle compose form submission
-    document.getElementById('compose-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const to = document.getElementById('to').value;
-        const subject = document.getElementById('subject').value;
-        const body = document.getElementById('body').value;
-
-        // Send email
-        const { data, error } = await supabase
-            .from('emails')
-            .insert([
-                { 
-                    sender_email: userEmail, 
-                    receiver_email: to, 
-                    subject: subject, 
-                    body: body,
-                    read: false
-                }
-            ]);
-
-        if (error) {
-            alert('Error sending email: ' + error.message);
-        } else {
-            alert('Email sent successfully!');
-            document.getElementById('compose-form').reset();
-            showInbox();
-        }
-    });
-
-    // Real-time subscription for new emails
-    function setupRealtimeSubscription() {
-        supabase
-            .channel('emails')
-            .on('postgres_changes', 
-                { 
-                    event: 'INSERT', 
-                    schema: 'public', 
-                    table: 'emails',
-                    filter: `receiver_email=eq.${userEmail}`
-                }, 
-                (payload) => {
-                    // New email received
-                    loadInbox();
-                    showNotification('New email received from ' + payload.new.sender_email);
-                }
-            )
-            .subscribe();
-    }
-
-    // Show notification for new email
-    function showNotification(message) {
-        // You can implement a more sophisticated notification system
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('ZetaMail - New Email', {
-                body: message,
-                icon: '/favicon.ico'
-            });
-        } else {
-            // Fallback to alert
-            alert('New email: ' + message);
-        }
-    }
-
-    // Request notification permission
-    if ('Notification' in window) {
-        Notification.requestPermission();
-    }
-</script>
+    </script>
 </body>
 </html>
